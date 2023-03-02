@@ -2,9 +2,12 @@
 function createSingleItem(data) {
   const {id, name, image, published_in, features} = data;
 
+  // get a single data from api
+  // it's call for modals
+  getSingleDataFromApi(id);
+
   const generateId = `item_${id}`;
   const modalId = `modal_${id}`;
-
   const div = document.createElement("div");
   div.className = "col-md-6 col-xl-4";
   div.id = generateId;
@@ -40,8 +43,24 @@ function createSingleItem(data) {
 }
 
 function modal(data) {
-  const {id} = data;
+  const {
+    id,
+    tool_name,
+    description,
+    website,
+    logo,
+    image_link,
+    input_output_examples,
+    features,
+    integrations,
+    use_cases,
+    pricing,
+    accuracy,
+  } = data;
+
+  const generateId = `item_${id}`;
   const modalId = `modal_${id}`;
+  const showDetails = document.querySelector(`#${generateId} .show_details`);
 
   const div = document.createElement("div");
   div.innerHTML = `
@@ -50,7 +69,7 @@ function modal(data) {
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="${modalId}Label">Modal title</h1>
+          <h1 class="modal-title fs-5" id="${modalId}Label">${tool_name}</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -59,8 +78,7 @@ function modal(data) {
               <div class="col-lg-6">
                 <div class="card border-danger">
                   <div class="card-body">
-                    <h4>ChatGPT is an AI-powered chatbot platform that uses OpenAI's GPT technology to simulate human
-                      conversation.</h4>
+                    <h4>${description}</h4>
                     <div class="row gx-2">
                       <div class="col-4">
                         <p class=" bg-secondary-subtle">$10/month
@@ -99,13 +117,21 @@ function modal(data) {
               <div class="col-lg-6">
                 <div class="card  position-relative">
                   <span class="position-absolute top-0 end-0  badge rounded-pill bg-danger fs-5 m-2">
-                    94% accuracy
+                    ${accuracy.score}% accuracy
                   </span>
 
-                  <img src="https://picsum.photos/id/11/1920/1080" class="card-img-top" alt="...">
+                  <img src="${image_link}" class="card-img-top" alt="${tool_name}">
                   <div class="card-body text-center">
-                    <h3>Hi, how are you doing today?</h3>
-                    <p>I'm doing well, thank you for asking. How can I assist you today?</p>
+                    <h3>${
+                      input_output_examples
+                        ? input_output_examples[0].input
+                        : "Data Not Found"
+                    }</h3>
+                    <p>${
+                      input_output_examples
+                        ? input_output_examples[0].output
+                        : "Data Not Found"
+                    }</p>
                   </div>
                 </div>
               </div>
@@ -116,5 +142,5 @@ function modal(data) {
     </div>
   </div>
 `;
-  return div;
+  showDetails.appendChild(div);
 }

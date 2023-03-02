@@ -1,15 +1,35 @@
 // Fetch or get data from API
 const getDataFromAPI = () => {
   isLoading(true);
-
-  // data or API source
-  const URL = `https://openapi.programming-hero.com/api/ai/tools`;
-  // fetch data
-  fetch(URL)
-    .then((res) => res.json())
-    .then((data) => showData(data.data.tools));
+  try {
+    // data or API source
+    const URL = `https://openapi.programming-hero.com/api/ai/tools`;
+    // fetch data
+    fetch(URL)
+      .then((res) => res.json())
+      .then((data) => showData(data.data.tools));
+  } catch (error) {
+    console.log(error);
+  }
 };
 getDataFromAPI();
+
+const getSingleDataFromApi = (id) => {
+  isLoading(true);
+
+  try {
+    // data or API source
+    const URL = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
+    // fetch data
+    fetch(URL)
+      .then((res) => res.json())
+      .then((data) => modal(data.data));
+  } catch (error) {
+    console.log(error);
+  }
+
+  isLoading(false);
+};
 
 // See 0 to 6 data
 function showData(data) {
