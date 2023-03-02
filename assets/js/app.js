@@ -5,8 +5,14 @@ const getDataFromAPI = () => {
   // fetch data
   fetch(URL)
     .then((res) => res.json())
-    .then((data) => console.log(data.data.tools));
+    .then((data) => showData(data.data.tools));
 };
 getDataFromAPI();
 
-console.log(createSingleItem());
+function showData(data) {
+  const show_all_data = document.getElementById("show_all_data");
+  data &&
+    data.slice(0, 6).forEach((singleData) => {
+      show_all_data.appendChild(createSingleItem(singleData));
+    });
+}
