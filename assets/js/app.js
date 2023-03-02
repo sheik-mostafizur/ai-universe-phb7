@@ -11,8 +11,20 @@ getDataFromAPI();
 
 function showData(data) {
   const show_all_data = document.getElementById("show_all_data");
+  const see_more = document.getElementById("see_more");
   data &&
     data.slice(0, 6).forEach((singleData) => {
+      show_all_data.appendChild(createSingleItem(singleData));
+    });
+
+  see_more.addEventListener("click", () => seeMoreData(data));
+}
+
+function seeMoreData(data) {
+  const show_all_data = document.getElementById("show_all_data");
+  show_all_data.innerHTML = "";
+  data &&
+    data.forEach((singleData) => {
       show_all_data.appendChild(createSingleItem(singleData));
     });
 }
