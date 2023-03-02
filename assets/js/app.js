@@ -8,3 +8,5 @@ const getDataFromAPI = () => {
     .then((data) => console.log(data.data.tools));
 };
 getDataFromAPI();
+
+console.log(createSingleItem());
