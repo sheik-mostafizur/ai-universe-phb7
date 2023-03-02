@@ -35,6 +35,10 @@ function seeMoreData(data) {
     data.forEach((singleData) => {
       show_all_data.appendChild(createSingleItem(singleData));
     });
+
+  // hide button
+  const btn = document.getElementById("see_more").parentElement;
+  btn.innerHTML = "";
 }
 
 function isLoading(isLoaded) {
