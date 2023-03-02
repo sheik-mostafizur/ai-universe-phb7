@@ -19,6 +19,8 @@ function showData(data) {
     data.slice(0, 6).forEach((singleData) => {
       show_all_data.appendChild(createSingleItem(singleData));
     });
+  const sort_by_date = document.getElementById("sort_by_date");
+  sort_by_date.addEventListener("click", () => sortByDate(data.slice(0, 6)));
 
   // see all data eventHandler
   const see_more = document.getElementById("see_more");
@@ -29,6 +31,9 @@ function showData(data) {
 
 // see all data
 function seeMoreData(data) {
+  const sort_by_date = document.getElementById("sort_by_date");
+  sort_by_date.addEventListener("click", () => sortByDate(data));
+
   const show_all_data = document.getElementById("show_all_data");
   show_all_data.innerHTML = "";
   data &&
@@ -41,6 +46,7 @@ function seeMoreData(data) {
   btn.innerHTML = "";
 }
 
+// is loading
 function isLoading(isLoaded) {
   const loading = document.querySelector("#loading img");
   if (isLoaded) {
@@ -48,4 +54,25 @@ function isLoading(isLoaded) {
   } else {
     loading.classList.add("d-none");
   }
+}
+
+// Function to parse a date string and return a Date object
+const parseDate = (dateString) => {
+  const [month, day, year] = dateString.split("/");
+  return new Date(year, month - 1, day);
+};
+
+// sort by data
+function sortByDate(data) {
+  const show_all_data = document.getElementById("show_all_data");
+  show_all_data.innerHTML = "";
+
+  data = data.sort((a, b) => {
+    return parseDate(a.published_in) - parseDate(b.published_in);
+  });
+
+  data &&
+    data.forEach((singleData) => {
+      show_all_data.appendChild(createSingleItem(singleData));
+    });
 }
