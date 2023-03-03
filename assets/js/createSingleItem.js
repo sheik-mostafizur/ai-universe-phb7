@@ -47,13 +47,10 @@ function modal(data) {
     id,
     tool_name,
     description,
-    website,
-    logo,
     image_link,
     input_output_examples,
     features,
     integrations,
-    use_cases,
     pricing,
     accuracy,
   } = data;
@@ -107,7 +104,7 @@ function modal(data) {
                     <h3>${
                       input_output_examples
                         ? input_output_examples[0].input
-                        : "Data Not Found"
+                        : "Can you give any example?"
                     }</h3>
                     <p>${
                       input_output_examples
@@ -139,13 +136,13 @@ function modal(data) {
 function createPricing(data, id) {
   if (!data) {
     return (id.innerHTML = `<div class="col-4">
-  <p class=" bg-secondary-subtle">Free of Cost/Basic</p>
+  <p class="m-0 p-2 bg-success-subtle">Free of Cost/ <br>Basic</p>
 </div>
 <div class="col-4">
-  <p class=" bg-secondary-subtle">Free Of Cost/Pro</p>
+  <p class="m-0 p-2 bg-warning-subtle">Free Of Cost/ <br>Pro</p>
 </div>
 <div class="col-4">
-  <p class=" bg-secondary-subtle">Free of Cost /Enterprise</p>
+  <p class="m-0 p-2 bg-danger-subtle">Free of Cost/ <br>Enterprise</p>
 </div>`);
   }
   const bg = ["success", "warning", "danger"];
