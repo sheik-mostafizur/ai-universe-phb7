@@ -24,7 +24,7 @@ function createSingleItem(data) {
     <div class="d-flex align-items-center justify-content-between">
       <div>
         <h4 class="card-title fw-bold">${name}</h4>
-        <p><img src="./assets/icons/calendar.svg" alt="date"> <span>${published_in}</span></p>
+        <p><img src="./assets/icons/calendar.svg" alt="date" loading="lazy"> <span>${published_in}</span></p>
       </div>
 
       <div class="show_details">
@@ -57,7 +57,6 @@ function modal(data) {
     pricing,
     accuracy,
   } = data;
-
   const generateId = `item_${id}`;
   const modalId = `modal_${id}`;
   const showDetails = document.querySelector(`#${generateId} .show_details`);
@@ -79,36 +78,16 @@ function modal(data) {
                 <div class="card border-danger">
                   <div class="card-body">
                     <h4>${description}</h4>
-                    <div class="row gx-2">
-                      <div class="col-4">
-                        <p class=" bg-secondary-subtle">$10/month
-                          Basic</p>
-                      </div>
-                      <div class="col-4">
-                        <p class=" bg-secondary-subtle">$10/month
-                          Basic</p>
-                      </div>
-                      <div class="col-4">
-                        <p class=" bg-secondary-subtle">$10/month
-                          Basic</p>
-                      </div>
-                    </div>
+                    <!-- show pricing list -->
+                    <div class="row mt-5 mb-4 gx-4 pricing text-center"></div>
                     <div class="row">
                       <div class="col-6">
                         <h3>Features</h3>
-                        <ul>
-                          <li>Customizable responses</li>
-                          <li>Customizable responses</li>
-                          <li>Customizable responses</li>
-                        </ul>
+                        <ul class="features"></ul>
                       </div>
                       <div class="col-6">
                         <h3>Integrations</h3>
-                        <ul>
-                          <li>FB Messenger</li>
-                          <li>FB Messenger</li>
-                          <li>FB Messenger</li>
-                        </ul>
+                        <ul class="integrations"></ul>
                       </div>
                     </div>
                   </div>
@@ -117,10 +96,13 @@ function modal(data) {
               <div class="col-lg-6">
                 <div class="card  position-relative">
                   <span class="position-absolute top-0 end-0  badge rounded-pill bg-danger fs-5 m-2">
-                    ${accuracy.score}% accuracy
+                    ${accuracy.score ? accuracy.score : "0.0"}% accuracy
                   </span>
 
-                  <img src="${image_link}" class="card-img-top" alt="${tool_name}">
+                  <img src="${image_link}" class="card-img-top" alt="${tool_name}" loading="lazy" style="
+                  background: #e2e0e0;
+                  height: 100%;
+                  min-height: 250px;">
                   <div class="card-body text-center">
                     <h3>${
                       input_output_examples
@@ -130,7 +112,7 @@ function modal(data) {
                     <p>${
                       input_output_examples
                         ? input_output_examples[0].output
-                        : "Data Not Found"
+                        : "No! Not Yet! Take a break!!!"
                     }</p>
                   </div>
                 </div>
@@ -143,4 +125,62 @@ function modal(data) {
   </div>
 `;
   showDetails.appendChild(div);
+
+  // show pricing Items
+  createPricing(pricing, document.querySelector(`#${modalId} .pricing`));
+  createFeatures(features, document.querySelector(`#${modalId} .features`));
+  createIntegrations(
+    integrations,
+    document.querySelector(`#${modalId} .integrations`)
+  );
+}
+
+// Create Pricing Item for modal
+function createPricing(data, id) {
+  if (!data) {
+    return (id.innerHTML = `<div class="col-4">
+  <p class=" bg-secondary-subtle">Free of Cost/Basic</p>
+</div>
+<div class="col-4">
+  <p class=" bg-secondary-subtle">Free Of Cost/Pro</p>
+</div>
+<div class="col-4">
+  <p class=" bg-secondary-subtle">Free of Cost /Enterprise</p>
+</div>`);
+  }
+  const bg = ["success", "warning", "danger"];
+  data.forEach((d, index) => {
+    const div = document.createElement("div");
+    div.className = "col-4";
+    div.innerHTML = `<p class="m-0 p-2 bg-${bg[index]}-subtle">${d.price} <br>${d.plan}</p>`;
+    id.appendChild(div);
+  });
+}
+
+// create features item for modal
+function createFeatures(data, id) {
+  if (!data) {
+    return (id.innerHTML = `<li>Computer Vision</li>
+    <li>Natural language processing</li>
+    <li>Deep Learning</li>
+    <li>Machine learning</li>`);
+  }
+
+  for (const d in data) {
+    const li = document.createElement("li");
+    li.innerHTML = data[d].feature_name;
+    id.appendChild(li);
+  }
+}
+
+// create Integrations item for modal
+function createIntegrations(data, id) {
+  if (!data) {
+    return (id.innerHTML = `Data not found`);
+  }
+  data.forEach((d) => {
+    const li = document.createElement("li");
+    li.innerHTML = d;
+    id.appendChild(li);
+  });
 }
