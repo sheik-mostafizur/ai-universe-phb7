@@ -14,6 +14,8 @@ const getDataFromAPI = () => {
 };
 getDataFromAPI();
 
+
+// get singleData from api
 const getSingleDataFromApi = (id) => {
   isLoading(true);
 

@@ -42,6 +42,7 @@ function createSingleItem(data) {
   return div;
 }
 
+// see more details in modal
 function modal(data) {
   const {
     id,
@@ -125,7 +126,9 @@ function modal(data) {
 
   // show pricing Items
   createPricing(pricing, document.querySelector(`#${modalId} .pricing`));
+  // show features items
   createFeatures(features, document.querySelector(`#${modalId} .features`));
+  // show integrations items
   createIntegrations(
     integrations,
     document.querySelector(`#${modalId} .integrations`)
